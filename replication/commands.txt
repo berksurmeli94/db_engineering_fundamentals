@@ -2,11 +2,11 @@ mkdir replication
 
 cd replication
 
-docker run --name pgmaster -p 5432:5432 -v C:/Users/Internative/Desktop/Projects/db_engineering_fundamentals/replication/pmaster_data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres -d postgres
+docker run --name pgmaster -p 5432:5432 -v (somedir)/db_engineering_fundamentals/replication/pmaster_data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres -d postgres
 
 docker logs pgmaster
 
-docker run --name pgreplica -p 5433:5432 -v C:/Users/Internative/Desktop/Projects/db_engineering_fundamentals/replication/preplica_data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres -d postgres
+docker run --name pgreplica -p 5433:5432 -v (somedir)/db_engineering_fundamentals/replication/preplica_data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres -d postgres
 
 mv preplica_data preplica_data_bk
 
