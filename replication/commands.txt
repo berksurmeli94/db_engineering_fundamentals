@@ -1,0 +1,47 @@
+mkdir replication
+
+cd replication
+
+docker run --name pgmaster -p 5432:5432 -v C:/Users/Internative/Desktop/Projects/db_engineering_fundamentals/replication/pmaster_data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres -d postgres
+
+docker logs pgmaster
+
+docker run --name pgreplica -p 5433:5432 -v C:/Users/Internative/Desktop/Projects/db_engineering_fundamentals/replication/preplica_data:/var/lib/postgresql/data -e POSTGRES_PASSWORD=postgres -d postgres
+
+mv preplica_data preplica_data_bk
+
+cp -R pmaster_data preplica_data
+
+//this enables user to work with the replication directory which we created. Careful, we explicitly write "all" after username that gives user all the permissions(this is not suitable for prod!!).
+go to pmaster_data open up pg_hba.conf and add 
+host replication postgres all scram-sha-256(or whatever algorithm you want to)
+
+//this enables for replica to connect to master 
+then go to preplica_data open up postgresql.conf then enable primary_conninfo
+primary_conninfo='application_name=replica_1 host=someip port=5432 user=postgres password=postgres'
+
+//then in the replica dir
+echo replica.signal
+
+//go to pmasger dir open up to postgresql.conf file nad find synchronous_standby_names
+synchronous_standby_names = 'first 1(replication_1, ... and goes on)'
+// first 1 --> takes first 1 app name from inside brackets
+// first 2 --> take fist 2 app name from inside brackets
+// this is for sync replication
+
+
+docker start pgmaster pgreplica
+
+docker logs pgmaster // to check if it worked
+docker logs pgmreplica // to check if it worked
+
+//for testing
+docker exec -it pgmaster psql -U postgres
+
+psql > select * from pg_stat_replication;
+//there should be at least one row
+
+I'm using windows subsystem linux(powershell for dev) so for shell commands make your own way.
+Also remind that this confs is not for production only for practice.
+
+
