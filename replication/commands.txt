@@ -33,7 +33,7 @@ synchronous_standby_names = 'first 1(replication_1, ... and goes on)'
 docker start pgmaster pgreplica
 
 docker logs pgmaster // to check if it worked
-docker logs pgmreplica // to check if it worked
+docker logs pgreplica // to check if it worked
 
 //for testing
 docker exec -it pgmaster psql -U postgres
@@ -42,6 +42,6 @@ psql > select * from pg_stat_replication;
 //there should be at least one row
 
 I'm using windows subsystem linux(powershell for dev) so for shell commands make your own way.
-Also remind that this confs is not for production only for practice.
+Also remind that this confs is not for production, only for practice.
 
 
