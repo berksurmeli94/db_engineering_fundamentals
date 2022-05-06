@@ -1,0 +1,11 @@
+//buidling the image
+docker build -t pgshard .
+
+//spin up the containers
+// if you're working with windows, it is helpfull to inspect docker containers before connecting to servers
+docker run --name pgshard_1 5432:5432 -e POSTGRES_PASSWORD=postgres -d pgshard
+docker run --name pgshard_1 5433:5432 -e POSTGRES_PASSWORD=postgres -d pgshard
+docker run --name pgshard_1 5434:5432 -e POSTGRES_PASSWORD=postgres -d pgshard
+
+//spin up pgadmin
+docker run -e PGADMIN_DEFAULT_EMAIL="postgres@postgres.com" -e PGADMIN_DEFAULT_PASSWORD="postgres" -p 5555:80 --name pgadmin dpage/pgadmin4
