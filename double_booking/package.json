@@ -1,6 +1,7 @@
 {
-  "name": "sharding",
+  "name": "double_booking-problem",
   "version": "1.0.0",
+  "description": "",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -8,12 +9,8 @@
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "consistent-hash": "^1.1.0",
-    "crypto": "^1.0.1",
     "express": "^4.18.1",
-    "hashring": "^3.2.0",
     "pg": "^8.7.3"
   }
 }
